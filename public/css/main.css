@@ -1,0 +1,87 @@
+
+body,html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: "Times New Roman";
+}
+
+.searchbar {
+    margin-bottom: 30px;
+    margin-top: auto;
+    height: 60px;
+    background-color: #353b48;
+    border-radius: 30px;
+    padding: 10px;
+}
+
+.search_input {
+    color: white;
+    border: 0;
+    outline: 0;
+    background: none;
+    width: 0;
+    caret-color:transparent;
+    line-height: 40px;
+    transition: width 0.4s linear;
+}
+
+.searchbar > .search_input {
+    padding: 0 10px;
+    width: 450px;
+    caret-color:red;
+    transition: width 0.4s linear;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.searchbar > .search_icon {
+    background: white;
+    color: #e74c3c;
+}
+
+.search_icon {
+    height: 40px;
+    width: 40px;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color:white;
+    text-decoration:none;
+}
+
+#search h1 {
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+#search a {
+    text-decoration: none;
+}
+
+.video-description {
+    padding: 5px 20px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid honeydew;
+    background-color: whitesmoke;
+}
+
+.video-link span {
+    font-size: 15px;
+}
+
+.video-description:hover {
+    background-color: white;
+}
+
+.watch {
+    margin-top: 100px;
+}
+
+#search-result p {
+    font-size: 17px;
+}
