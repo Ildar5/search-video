@@ -19,42 +19,20 @@ class SearchController extends Controller
     {
         $html = "";
         if (isset($_GET['q'])) {
-            $videoList = $this->youtubeApi->search($_GET['q']);
-            $html = $this->getListWithHtml($videoList)["html"];
+            $html = $this->youtubeApi->getListWithHtml($_GET['q'])["html"];
         }
-
         return view('search.index', compact( 'html'));
     }
 
     public function getYoutubeVideoList(Request $request)
     {
-        $videoList = $this->youtubeApi->search($request->q);
-        $videoList = $this->getListWithHtml($videoList);
+        $videoList = $this->youtubeApi->getListWithHtml($request->q);
 
         return response()->json(
             [
                 "result" => $videoList["html"],
                 "status" => $videoList["status"],
             ], 200);
-    }
-
-    public function getListWithHtml($videoList): array
-    {
-        $html = "";
-        $status = 0;
-
-        if ($videoList) {
-            $html = View::make('search.partials.video-list', [
-                'result' => $videoList
-            ])->render();
-
-            $status = 1;
-        }
-
-        return [
-            "status" => $status,
-            "html" => $html
-        ];
     }
 
     public function watchVideo(Request $request)

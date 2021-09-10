@@ -24,7 +24,7 @@ class YoutubeSearchApi implements IYoutubeSearchApi
         $this->youtube = new \Google_Service_YouTube($this->client);
     }
 
-    public function search($q): array
+    private function search($q): array
     {
         try {
             $searchResponse = $this->youtube->search->listSearch('id,snippet', [
@@ -55,5 +55,25 @@ class YoutubeSearchApi implements IYoutubeSearchApi
             }
         }
         return $result;
+    }
+
+    public function getListWithHtml($q): array
+    {
+        $html = "";
+        $status = 0;
+        $videoList = $this->search($q);
+
+        if ($videoList) {
+            $html = View::make('search.partials.video-list', [
+                'result' => $videoList
+            ])->render();
+
+            $status = 1;
+        }
+
+        return [
+            "status" => $status,
+            "html" => $html
+        ];
     }
 }
