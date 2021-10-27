@@ -11,9 +11,9 @@ class SearchController extends Controller
 {
     private $youtubeRepository;
 
-    public function __construct(YoutubeRepositoryInterface $youtubeRepositoryInterface)
+    public function __construct(YoutubeRepositoryInterface $youtubeRepository)
     {
-        $this->youtubeRepository = $youtubeRepositoryInterface;
+        $this->youtubeRepository = $youtubeRepository;
     }
 
     public function index()
