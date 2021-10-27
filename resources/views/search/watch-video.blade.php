@@ -9,10 +9,10 @@
                 <div class="col-md-12 col-xs-12">
                     <div id="search-result">
                         <h2>
-                            {{$title}}
+                            {!! $title !!}
                         </h2>
                         <p>
-                            {{$description}}
+                            {!! $description !!}
                         </p>
                         <iframe width="100%"
                             height="450"

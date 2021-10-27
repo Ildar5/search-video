@@ -1,27 +1,21 @@
 <?php
 
-namespace App\Domain\Services;
+namespace App\Repository;
 
-use App\Interfaces\IYoutubeSearchApi;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Http\Client\ConnectionException;
+use App\Interfaces\YoutubeRepositoryInterface;
 use Illuminate\Support\Facades\View;
+use Google_Service_YouTube;
 
 
-class YoutubeSearchApi implements IYoutubeSearchApi
+class YoutubeRepository implements YoutubeRepositoryInterface
 {
     private $maxResults;
-    private $youtubeApiKey;
-    private $client;
     private $youtube;
 
-    public function __construct()
+    public function __construct(Google_Service_YouTube $youtube)
     {
         $this->maxResults = config("services.youtube.max_results");
-        $this->youtubeApiKey = config("services.youtube.api_key");
-        $this->client = new \Google_Client();
-        $this->client->setDeveloperKey($this->youtubeApiKey);
-        $this->youtube = new \Google_Service_YouTube($this->client);
+        $this->youtube = $youtube;
     }
 
     private function search($q): array

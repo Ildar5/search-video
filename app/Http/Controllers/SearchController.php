@@ -3,30 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Services\YoutubeSearchApi;
+use App\Interfaces\YoutubeRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 
 class SearchController extends Controller
 {
-    private $youtubeApi;
+    private $youtubeRepository;
 
-    public function __construct()
+    public function __construct(YoutubeRepositoryInterface $youtubeRepositoryInterface)
     {
-        $this->youtubeApi = new YoutubeSearchApi();
+        $this->youtubeRepository = $youtubeRepositoryInterface;
     }
 
     public function index()
     {
         $html = "";
         if (isset($_GET['q'])) {
-            $html = $this->youtubeApi->getListWithHtml($_GET['q'])["html"];
+            $html = $this->youtubeRepository->getListWithHtml($_GET['q'])["html"];
         }
         return view('search.index', compact( 'html'));
     }
 
     public function getYoutubeVideoList(Request $request)
     {
-        $videoList = $this->youtubeApi->getListWithHtml($request->q);
+        $videoList = $this->youtubeRepository->getListWithHtml($request->q);
 
         return response()->json(
             [
@@ -39,6 +40,7 @@ class SearchController extends Controller
     {
         $id = $request->id;
         $title = $request->title;
+        logger()->info($title);
         $description = $request->description;
 
         return view('search.watch-video', compact( 'id', 'title', 'description'));

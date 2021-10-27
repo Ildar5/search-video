@@ -2,7 +2,7 @@
 
 namespace App\Interfaces;
 
-interface IYoutubeSearchApi
+interface YoutubeRepositoryInterface
 {
     public function getListWithHtml($q): array;
 }
