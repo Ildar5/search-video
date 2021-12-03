@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Services;
 use App\Interfaces\YoutubeConnectInterface;
 use Google_Service_YouTube;
 use Google_Client;
+
 
 class YoutubeConnect implements YoutubeConnectInterface
 {
