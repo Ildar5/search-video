@@ -16,7 +16,7 @@
                 <div class="col-md-12 col-xs-12">
                     <div class="d-flex justify-content-center h-100">
                         <div class="searchbar">
-                            <input class="search_input" id="q" name="q" type="text" placeholder="Search...">
+                            <input class="search_input" v-model="q" id="q" name="q" type="text" placeholder="Search...">
                             <button class="btn search_icon" @click="handleClick">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -27,9 +27,7 @@
             <div class="row">
                 <div class="col-md-3 col-xs-12"></div>
                 <div class="col-md-6 col-xs-12">
-                    <div id="search-result">
-                       <?= $html ?>
-                    </div>
+                    <div id="search-result" v-html="video_list"></div>
                 </div>
                 <div class="col-md-3 col-xs-12"></div>
             </div>

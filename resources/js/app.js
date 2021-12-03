@@ -5,38 +5,34 @@ window.Vue = require('vue').default;
 new Vue({
     el: '#search',
 
-    data: {},
-
-    computed: {},
+    data: {
+        video_list: '',
+        q: ''
+    },
 
     methods: {
-        handleClick: function(item) {
-            let query = document.getElementById('q').value;
-            this.changeUrlPushState('q', query);
-
-            axios.get('/get-video-list?q=' + query, {}).then(response => {
+        handleClick: function() {
+            this.updateResult();
+        },
+        getVideoList() {
+            axios.get('/get-video-list?q=' + this.q, {}).then(response => {
                 if (response.data.status === 1) {
-                    let element = document.getElementById('search-result');
-                    element.innerHTML = element.innerHTML.replace(element.innerHTML, response.data.result);
+                    this.video_list = response.data.result;
                 }
             });
         },
-        changeUrlPushState(param, value) {
+        changeUrlPushState() {
             let query = document.location.search;
             query = decodeURIComponent(query.replace(/\+/g, ' '));
             query = query.substr(1);
             query = this.parseJQueryParams(query);
-
-            query.q = value;
+            query.q = this.q;
 
             if (typeof query.q === "undefined") {
                 query.q = '';
             }
 
-            console.log(query);
-            console.log(location.pathname);
             let search_url = location.pathname + '?q=' + query.q;
-            console.log(search_url);
             window.history.pushState('video_list', 'Video List', search_url);
         },
         parseJQueryParams(p) {
@@ -50,9 +46,6 @@ new Vue({
 
                 name = name.replace(/\[([^\]]*)\]/g,
                 function (k, idx) {
-                    console.log('k, idx');
-                    console.log(k);
-                    console.log(idx);
                     indices[indices.length] = idx;
                     return "";
                 });
@@ -82,5 +75,30 @@ new Vue({
             }
             return params;
         },
-    }
+        getUrlSearchValue() {
+            let url = new URL(window.location.href);
+            let query = url.searchParams.get("q");
+            if (query === null)
+                return '';
+            return query;
+        },
+        updateResult() {
+            this.changeUrlPushState();
+            if (this.q === '') {
+                this.video_list = '';
+            } else {
+                this.getVideoList();
+            }
+        },
+        addQuery() {
+            this.q = this.getUrlSearchValue();
+        }
+    },
+
+    created() {
+        setTimeout(() => {
+            this.addQuery();
+            this.updateResult()
+        }, 100)
+    },
 });

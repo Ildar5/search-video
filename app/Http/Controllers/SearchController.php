@@ -18,11 +18,7 @@ class SearchController extends Controller
 
     public function index()
     {
-        $html = "";
-        if (isset($_GET['q'])) {
-            $html = $this->youtubeRepository->getListWithHtml($_GET['q'])["html"];
-        }
-        return view('search.index', compact( 'html'));
+        return view('search.index');
     }
 
     public function getYoutubeVideoList(Request $request)
@@ -40,7 +36,6 @@ class SearchController extends Controller
     {
         $id = $request->id;
         $title = $request->title;
-        logger()->info($title);
         $description = $request->description;
 
         return view('search.watch-video', compact( 'id', 'title', 'description'));
